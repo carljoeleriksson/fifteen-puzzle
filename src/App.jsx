@@ -1,14 +1,19 @@
 import React from 'react'
-
 import './App.css'
 
-function App() {
+import Board from './components/Board'
 
-  return (
-    <div className="App">
+function App() {
     
-    </div>
-  )
+
+    return (
+        <div className="App">
+            <header><h1>15 Puzzle</h1></header>
+            <main>
+                <Board />
+            </main>
+        </div>
+    )
 }
 
 export default App

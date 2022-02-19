@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import Tile from './Tile'
-import { NUM_TILES, GRID_SIZE, BOARD_SIZE } from '../utils/constants'
+import { NUM_TILES, GRID_SIZE } from '../utils/constants'
 
 
 function Board() {
     //Set a state that holds an array of all tile indexes (keys)
     const [tiles, setTiles] = useState([...Array(NUM_TILES).keys()])
+    const [isStarted, setIsStarted] = useState(false)
+    const [gameWon, setGameWon] = useState(false)
 
 
     function getGridPosition(index) {
@@ -109,37 +111,77 @@ function Board() {
         }
     }
 
+    function renderTiles() {
+        return tiles.map((tile, index) => (
+            <Tile 
+            key={tile}
+            index={index}
+            tile={tile}
+            handleTileClick={handleTileClick}
+            />    
+            ))
+        }
 
-    function handleTileClick(clickedIndex) {
-        
+    function scrambleTiles() {
+        console.log('scramble tiles');
+        let scrambledTilesArr = [...tiles]
+        let randomIndex
+        let currentIndex = scrambledTilesArr.length
+
+        // While there remain elements to shuffle
+        while (currentIndex != 0) {
+            // Set randomIndex to a random Index
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And set current element-index to the random index
+            [scrambledTilesArr[currentIndex], scrambledTilesArr[randomIndex]] = [
+                scrambledTilesArr[randomIndex], scrambledTilesArr[currentIndex]];
+        }
+
+        setTiles(scrambledTilesArr)
+    }
+
+    function handleTileClick(clickedIndex) {    
         if(canMove(clickedIndex)) {
             const blankTileIndex = tiles.indexOf(tiles.length - 1)
             moveTiles(tiles, clickedIndex, blankTileIndex)
         }
-
     }
 
+    function handleScrambleClick(){
+        scrambleTiles()
+        setIsStarted(true)
+    }
 
-    function renderTiles() {
-        return tiles.map((tile, index) => (
-            <Tile 
-                key={tile}
-                index={index}
-                tile={tile}
-                handleTileClick={handleTileClick}
-            />    
-        ))
+    function winCheck() {
+        if(isStarted) {
+            let isSorted = true
+            //checks if any index:s value in tiles is higher than 
+            //the next index [i+1] value, and sets isSorted to false if it is.
+            for (let i = 0; i < tiles.length - 1; i++) {
+                if (tiles[i] > tiles[i+1]) {
+                    isSorted = false
+                    break;
+                }
+            }
+            setGameWon(isSorted)
+        }
     }
 
     useEffect(() => {
         renderTiles()
+        winCheck()
     }, [tiles])
 
   return (<>
     <ul id="board">
         {tiles && renderTiles()}
     </ul>
-  
+    <button className='btn' onClick={handleScrambleClick}>{!isStarted ? 'Start' : 'Scramble Again'}</button>
+    {gameWon && 
+        <h2>You solved it!<span>🤯🤓</span></h2>
+    }
   </>
   )
 }

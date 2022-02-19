@@ -14,9 +14,6 @@ moveTiles() och de matematiska uträkningarna för att beräkna positioner i arr
 
 Det var även lite klurigt hålla ordning på att; om man t.ex. vill flytta en bricka sidleds i en rad så måste man kolla hur många kolumn-steg jag ska flytta och vice versa.
 
-I min dev-branch på GitHub har jag kommenterat upp väldigt mycket för att hålla koll på vad var sak gör för att hålla ordning i mitt huvud:)
-
 **En brist** som jag vet finns är att det iaf i ett vanligt 15-pussel finns en olöslig start-position, och detta har jag inte checkat för.
 
 CSS har jag enl. instruktionen inte fokuserat nämnvärt på, och med tanke på att det är ett såpass litet projekt så höll jag all CSS i en vanlig CSS-fil.
-Om man hade velat ha en mjukare upplevelse med lite transitions etc. så tror jag att man hade kunnat använda 

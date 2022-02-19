@@ -24,26 +24,17 @@ function Board() {
     }
 
     function canMove(clickedIndex) {
-        //get what position in the grid that the tile is on.
-        console.log('clickedIndex: ', clickedIndex);
         //Get the blank tile by it's index in the original array
         const blankTileIndex = tiles.indexOf(tiles.length - 1)
-        console.log('blankTileIndex: ', blankTileIndex);
         
         const clickedGridPos = getGridPosition(clickedIndex)
         const blankGridPos = getGridPosition(blankTileIndex)
-        console.log('clickedGridPos: ', clickedGridPos );
-        console.log('blankGridPos: ', blankGridPos );
-
         
         if(clickedGridPos.row ===  blankGridPos.row) {
-            console.log('canMove === true');
             return true
         } else if(clickedGridPos.column === blankGridPos.column) {
-            console.log('canMove === true');
             return true
         } else {
-            console.log('canMove === false');
             return false
         }
     }
@@ -60,7 +51,6 @@ function Board() {
         const newTilesArr = [...tiles]
         //Find out if clickedIndex is in the same row or column 
         const clickedGridPos = getGridPosition(clickedIndex)
-        console.log('clickedGridPos: ', clickedGridPos);
         const blankGridPos = getGridPosition(blankTileIndex)
 
         const isSameRow = Math.abs(clickedGridPos.row - blankGridPos.row) === 0

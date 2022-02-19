@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Tile from './Tile'
-import { NUM_TILES, GRID_SIZE } from '../utils/constants'
+import { NUM_TILES, NUM_ROWS, NUM_COLS } from '../utils/constants'
 
 
 function Board() {
@@ -9,11 +9,16 @@ function Board() {
     const [isStarted, setIsStarted] = useState(false)
     const [gameWon, setGameWon] = useState(false)
 
+    const boardStyle = {
+        gridTemplateRows: `repeat(${NUM_ROWS}, 1fr)`,
+        gridTemplateColumns: `repeat(${NUM_COLS}, 1fr)`,
+    }
+
 
     function getGridPosition(index) {
         let gridPosition = {}
-        gridPosition.row    = Math.floor(index / GRID_SIZE) 
-        gridPosition.column = index % GRID_SIZE
+        gridPosition.row    = Math.floor(index / NUM_COLS)
+        gridPosition.column = index % NUM_COLS
 
         return gridPosition
     }
@@ -47,20 +52,17 @@ function Board() {
         //Swap places of clickedIndex and blankTileIndex in array 
         //using Destructuring assignment.
         [newTilesArr[currentIndex], newTilesArr[newIndex]] = [newTilesArr[newIndex], newTilesArr[currentIndex]]
-        
     }
 
     function moveTiles(tiles, clickedIndex, blankTileIndex) {
         const newTilesArr = [...tiles]
         //ta reda på om clicked ligger på samma row eller column
         const clickedGridPos = getGridPosition(clickedIndex)
+        console.log('clickedGridPos: ', clickedGridPos);
         const blankGridPos = getGridPosition(blankTileIndex)
 
         const isSameRow = Math.abs(clickedGridPos.row - blankGridPos.row) === 0
         const isSameCol = Math.abs(clickedGridPos.column - blankGridPos.column) === 0
-        console.log('isSameRow: ', isSameRow);
-        console.log('isSameCol: ', isSameCol);
-
 
         let modifier
         let numOfPlacesToMove
@@ -101,7 +103,7 @@ function Board() {
                 //minus GRID_SIZE(4) för det är så många platser man behöver 
                 //flytta i arrayen för att flytta den en rad upp/ner i griden
                 //GRID_SIZE kan bytas mot t.ex. ROW_LENGTH sen om man vill.
-                let newIndexPos = currentIndexPos+(GRID_SIZE*modifier)
+                let newIndexPos = currentIndexPos+(NUM_COLS*modifier)
 
                 swapTiles(newTilesArr, currentIndexPos, newIndexPos)
                 currentIndexPos = newIndexPos;
@@ -175,7 +177,7 @@ function Board() {
     }, [tiles])
 
   return (<>
-    <ul id="board">
+    <ul id="board" style={{...boardStyle}}>
         {tiles && renderTiles()}
     </ul>
     <button className='btn' onClick={handleScrambleClick}>{!isStarted ? 'Start' : 'Scramble Again'}</button>

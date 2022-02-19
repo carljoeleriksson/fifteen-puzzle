@@ -1,7 +1,7 @@
 # 15 PUZZLE
 ## NOTES
--Run `npm run dev` to start app.
--To alter number of rows and/or columns, go to src/utils/constants.js.
+- Run `npm run dev` to start app.
+- To alter number of rows and/or columns, go to src/utils/constants.js.
 
 ## OM ARBETET
 När jag fick uppgiften såg den enkel ut, men jag insåg snart att den var rätt svår med mina mått mätt. Jag har inte gjort jättemycket "matematiskt-inriktad" programmering, som jag tyckte att detta var. Så det tog ganska lång tid att fundera ut hur jag skulle lägga upp appen. Jag researchade och testade olika sätt ungefär en eftermiddag innan jag kände att jag hade hittat rätt. 

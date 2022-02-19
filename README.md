@@ -1,6 +1,6 @@
 # 15 PUZZLE
 ## NOTES
-- Run `npm run dev` to start app.
+- Run `npm i` and then `npm run dev` to start app.
 - To alter number of rows and/or columns, go to src/utils/constants.js.
 - If you want to test the "winCheck"-message. In the Board.jsx; change the state `isStarted` to `true`. That way it checks for win directly at startup when the array is correctly ordered.
 

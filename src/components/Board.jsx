@@ -37,26 +37,28 @@ function Board() {
 
         
         if(clickedGridPos.row ===  blankGridPos.row) {
-            console.log('can move true');
+            console.log('canMove === true');
             return true
         } else if(clickedGridPos.column === blankGridPos.column) {
-            console.log('can move true');
+            console.log('canMove === true');
             return true
         } else {
-            console.log('can move false');
+            console.log('canMove === false');
             return false
         }
     }
 
     function swapTiles(newTilesArr, currentIndex, newIndex) {
-        //Swap places of clickedIndex and blankTileIndex in array 
+        //Swap places of clickedIndex and blankTileIndex in newTilesArr 
         //using Destructuring assignment.
-        [newTilesArr[currentIndex], newTilesArr[newIndex]] = [newTilesArr[newIndex], newTilesArr[currentIndex]]
+        [newTilesArr[currentIndex], newTilesArr[newIndex]] = 
+        [newTilesArr[newIndex], newTilesArr[currentIndex]]
     }
 
     function moveTiles(tiles, clickedIndex, blankTileIndex) {
+        //copy of tiles array
         const newTilesArr = [...tiles]
-        //ta reda på om clicked ligger på samma row eller column
+        //Find out if clickedIndex is in the same row or column 
         const clickedGridPos = getGridPosition(clickedIndex)
         console.log('clickedGridPos: ', clickedGridPos);
         const blankGridPos = getGridPosition(blankTileIndex)
@@ -66,66 +68,55 @@ function Board() {
 
         let modifier
         let numOfPlacesToMove
-
-        //Refactorera så att det är en for loop utanför ifsats med en condition!
+        let currentIndexPos = blankTileIndex
 
         if(isSameRow) {
             const positionDiff = clickedGridPos.column - blankGridPos.column
             modifier = positionDiff > 0 ? 1 : -1
             numOfPlacesToMove = Math.abs(positionDiff)
 
-            let currentIndexPos = blankTileIndex
-            
-            for (let i = 1; i <= numOfPlacesToMove; i++){
-                //för varje numOfPlacesToMove 
-                //flytta blankTileIndex ett grid-steg i den row/col som clickIndex kom ifrån.
-                let newIndexPos = currentIndexPos+(1*modifier)
-
-                swapTiles(newTilesArr, currentIndexPos, newIndexPos)
-                currentIndexPos = newIndexPos;
-            }
-            console.log('isSameRow newTilesArr: ', newTilesArr);
-            setTiles(newTilesArr)
-
         } else if(isSameCol) {
             const positionDiff = clickedGridPos.row - blankGridPos.row
             modifier = positionDiff > 0 ? 1 : -1
             numOfPlacesToMove = Math.abs(positionDiff)
-            
-            let currentIndexPos = blankTileIndex
-            console.log('currentIndexPos ', currentIndexPos);
-            
-            for (let i = 1; i <= numOfPlacesToMove; i++){
-                //för varje numOfPlacesToMove 
-                //flytta blankTileIndex ett grid-steg i den row/col som clickIndex kom ifrån.
-
-                //sätter newIndexPos till tilen-vi-vill-flytta:s index plus eller 
-                //minus GRID_SIZE(4) för det är så många platser man behöver 
-                //flytta i arrayen för att flytta den en rad upp/ner i griden
-                //GRID_SIZE kan bytas mot t.ex. ROW_LENGTH sen om man vill.
-                let newIndexPos = currentIndexPos+(NUM_COLS*modifier)
-
-                swapTiles(newTilesArr, currentIndexPos, newIndexPos)
-                currentIndexPos = newIndexPos;
-            }
-            console.log('isSameCol newTilesArr: ', newTilesArr);
-            setTiles(newTilesArr)
         }
+
+        //for every numOfPlacesToMove 
+        //move the blank tile one grid-step in the row/col that 
+        //clickIndex is in.
+        for (let i = 1; i <= numOfPlacesToMove; i++){
+
+            //if isSameCol: 
+            //sets newIndexPos to tile-to-be-moved:s index plus or 
+            //minus NUM_COLS because thats how many places it needs to be 
+            //moved to move up a row in the grid.
+
+            //if isSameRow: 
+            //sets newIndexPos to tile-to-be-moved:s index plus or 
+            //minus one step (modifier).
+            let newIndexPos = currentIndexPos+(isSameCol ? (NUM_COLS*modifier) : modifier)
+
+            swapTiles(newTilesArr, currentIndexPos, newIndexPos)
+            //sets the currentIndexPos to newIndexPos so that
+            //we move the blank tile from the new position next iteration.
+            currentIndexPos = newIndexPos;
+        }
+
+        setTiles(newTilesArr)
     }
 
     function renderTiles() {
         return tiles.map((tile, index) => (
             <Tile 
-            key={tile}
-            index={index}
-            tile={tile}
-            handleTileClick={handleTileClick}
+                key={tile}
+                index={index}
+                tile={tile}
+                handleTileClick={handleTileClick}
             />    
             ))
         }
 
     function scrambleTiles() {
-        console.log('scramble tiles');
         let scrambledTilesArr = [...tiles]
         let randomIndex
         let currentIndex = scrambledTilesArr.length
@@ -136,7 +127,7 @@ function Board() {
             randomIndex = Math.floor(Math.random() * currentIndex);
             currentIndex--;
 
-            // And set current element-index to the random index
+            // And set current element-index to randomIndex
             [scrambledTilesArr[currentIndex], scrambledTilesArr[randomIndex]] = [
                 scrambledTilesArr[randomIndex], scrambledTilesArr[currentIndex]];
         }
@@ -177,14 +168,14 @@ function Board() {
     }, [tiles])
 
   return (<>
-    <ul id="board" style={{...boardStyle}}>
-        {tiles && renderTiles()}
-    </ul>
-    <button className='btn' onClick={handleScrambleClick}>{!isStarted ? 'Start' : 'Scramble Again'}</button>
-    {gameWon && 
-        <h2>You solved it!<span>🤯🤓</span></h2>
-    }
-  </>
+            <ul id="board" style={{...boardStyle}}>
+                {tiles && renderTiles()}
+            </ul>
+            <button className='btn' onClick={handleScrambleClick}>
+                {!isStarted ? 'Start' : 'Scramble Again'}
+            </button>
+            {gameWon && <h2>You solved it!<span>🤯🤓</span></h2>}
+        </>
   )
 }
 

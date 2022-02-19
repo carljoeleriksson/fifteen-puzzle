@@ -41,7 +41,6 @@ h1 {
     align-items: center;
     font-family: var(--ff-primary);
     font-weight: 600;
-     
 }
 
 main{
@@ -53,8 +52,6 @@ main{
 #board {
     background-color: var(--clr-tray);
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
     justify-items: center;
     align-content: center;
     gap: 0.3rem;

@@ -6,7 +6,7 @@ import { NUM_TILES, NUM_ROWS, NUM_COLS } from '../utils/constants'
 function Board() {
     //Set a state that holds an array of all tile indexes (keys)
     const [tiles, setTiles] = useState([...Array(NUM_TILES).keys()])
-    const [isStarted, setIsStarted] = useState(false)
+    const [isStarted, setIsStarted] = useState(true)
     const [gameWon, setGameWon] = useState(false)
 
     const boardStyle = {

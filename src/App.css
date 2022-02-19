@@ -5,6 +5,7 @@
     --clr-light-grey: #dfe6e9;
     --clr-tiles: #00b894;
     --clr-tray: #b2bec3;
+    --clr-accent: #fdcb6e;
 
     --ff-primary: 'Open Sans', sans-serif;
 }
@@ -18,11 +19,11 @@
 h1 {
     text-transform: uppercase;
     font-weight: bolder;
-    font-size: 3rem;
+    font-size: 12vw;
 }
 
 .btn {
-    background-color: var(--clr-tiles);
+    background-color: var(--clr-accent);
     outline: none;
     border: none;
     border-radius: 999rem;
@@ -30,8 +31,9 @@ h1 {
     font-family: var(--ff-primary);
     font-weight: bolder;
     text-transform: uppercase;
-    padding: 0.5rem 2rem;
-    margin: 1rem;
+    padding: 2.5% 5%;
+    margin: 5%;
+    font-size: 3vw;
 }
 
 .App {
@@ -54,19 +56,25 @@ main{
     display: grid;
     justify-items: center;
     align-content: center;
-    gap: 0.3rem;
-    padding: 0.3rem;
-
+    gap: 1vw;
+    padding: 4vw;
+    border-radius: 3vw;
 }
 
 .tile {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 4rem;
-    height: 4rem;
+    width: 15vw;
+    height: 15vw;
     color: #FFF;
     background-color: var(--clr-tiles);
     font-weight: 800;
-    font-size: 2rem;
+    font-size: 7vw;
 }
+
+/* RESPONSIVE */
+
+@media only screen and (min-width: 768px) {
+    
+  }

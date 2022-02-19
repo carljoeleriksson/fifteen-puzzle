@@ -19,4 +19,4 @@ I min dev-branch på GitHub har jag kommenterat upp väldigt mycket för att hå
 
 
 CSS har jag enl. instruktionen inte fokuserat nämnvärt på, och med tanke på att det är ett såpass litet projekt så höll jag all CSS i en vanlig CSS-fil.
-
+Om man hade velat ha en mjukare upplevelse med lite transitions etc. så tror jag att man hade kunnat använda 

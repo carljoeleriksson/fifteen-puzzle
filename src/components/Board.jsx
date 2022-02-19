@@ -6,7 +6,7 @@ import { NUM_TILES, NUM_ROWS, NUM_COLS } from '../utils/constants'
 function Board() {
     //Set a state that holds an array of all tile indexes (keys)
     const [tiles, setTiles] = useState([...Array(NUM_TILES).keys()])
-    const [isStarted, setIsStarted] = useState(true)
+    const [isStarted, setIsStarted] = useState(false)
     const [gameWon, setGameWon] = useState(false)
 
     const boardStyle = {
@@ -161,10 +161,11 @@ function Board() {
             <ul id="board" style={{...boardStyle}}>
                 {tiles && renderTiles()}
             </ul>
+            {gameWon && <h2>You solved it!<span>🤯🤓</span></h2>}
             <button className='btn' onClick={handleScrambleClick}>
                 {!isStarted ? 'Start' : 'Scramble Again'}
             </button>
-            {gameWon && <h2>You solved it!<span>🤯🤓</span></h2>}
+            
         </>
   )
 }
